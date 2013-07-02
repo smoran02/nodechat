@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        div {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #container {
+            width: 520px;
+            height: 420px;
+            text-align: center;
+        }
+
+        #sidebar {
+            display: inline-block;
+            width: 150px;
+            height: 400px;
+            vertical-align: top;
+            border: 1px solid black;
+        }
+
+        #chatarea {
+            display: inline-block;
+            width: 350px;
+            height: 370px;
+            vertical-align: top;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        #chattext {
+            width: 250px;
+            border: 1px solid gray;
+            display: inline;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="container"><div id="sidebar"></div><div id="chatarea"></div>
+    <form id="chat">
+        <input id="chattext" type="text" autocomplete="off" placeholder="Type something here..." />
+        <input type="submit" value="Send" />
+    </form>
+    </div>
+    <script>
+        var socket = io.connect('http://localhost:8080');
+        $(document).ready(function(){
+             $('#chattext').focus()
+        });
+
+        socket.on('connect', function(data){
+            nickname = prompt("Enter a nickname: ");
+            socket.emit('join', nickname);
+        });
+
+        socket.on('chat', function(data){
+            $('#chatarea').append(data + "<br/>");
+        });
+
+        socket.on('printname', function(name){
+            $('#chatarea').append(name + " has joined the chat.<br/>")
+        });
+
+        $('#chat').submit(function(e){
+            var message = $('#chattext').val();
+            socket.emit('messages', message);
+            $('#chattext').val('');
+            $('#chattext').attr('placeholder', "");
+            return false;
+        });
+    </script>
+</body>
+
+
+</html>
