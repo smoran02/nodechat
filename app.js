@@ -27,5 +27,5 @@ io.sockets.on('connection', function(socket){
     });
 });
 
-console.log('Application booting...');
+console.log('App running on port 8080');
 server.listen(8080);
