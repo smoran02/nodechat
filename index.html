@@ -17,46 +17,49 @@
         }
 
         #container {
-            width: 520px;
-            height: 420px;
-            text-align: center;
+        		text-align: center;
         }
 
         #sidebar {
-            display: inline-block;
-            width: 150px;
-            height: 400px;
-            vertical-align: top;
-            border: 1px solid black;
+        		width: 150px;
+        		height: 370px;
+        		float: left;
+        		border-top: 1px solid black;
+        		border-left: 1px solid black;
+        		border-bottom: 1px solid black;
         }
 
         #chatarea {
-            display: inline-block;
+        		float: left;
             width: 350px;
             height: 370px;
-            vertical-align: top;
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-            border-right: 1px solid black;
+            border: 1px solid black;
             text-align: left;
             padding-left: 15px;
+            overflow: scroll;
+        }
+
+        #chat {
+        	clear: left;
+        	float: left;
+        	margin-left: 150px;
         }
 
         #chattext {
-            width: 250px;
-            border: 1px solid gray;
-            display: inline;
+        	width: 315px;
         }
     </style>
 </head>
 
 
 <body>
-    <div id="container"><div id="sidebar"></div><div id="chatarea"></div>
-    <form id="chat">
+    <div id="container">
+    	<div id="sidebar"></div>
+    	<div id="chatarea"></div>
+    	<div><form id="chat">
         <input id="chattext" type="text" autocomplete="off" placeholder="Type something here..." />
         <input type="submit" value="Send" />
-    </form>
+    	</form></div>
     </div>
     <script>
         var socket = io.connect('http://localhost:8080');
